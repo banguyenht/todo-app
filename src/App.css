@@ -36,3 +36,40 @@
     transform: rotate(360deg);
   }
 }
+
+.ml-10 {
+  margin-left: 10px;
+}
+
+.w150 {
+  width: 150px;
+}
+
+.small-btn {
+  width: 30px;
+  height: 30px;
+  padding: 5px;
+}
+
+.title {
+  background-color: #fcf8e3;
+  font-size: 15px;
+  padding: 10px 5px;;
+}
+
+.close-new {
+  float: right;
+}
+
+.task-form {
+  padding: 15px;
+  border: 1px solid #6e541f;
+}
+
+.active {
+  background-color: yellow;
+}
+
+.deactive {
+  background-color: royalblue;
+}
