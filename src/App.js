@@ -3,6 +3,7 @@ import './App.css';
 import TaskControl from './components/TaskControl'
 import TaskList from './components/TaskList'
 import AddTask from './components/AddTask'
+import Demo from './trainning/demo'
 class App extends React.Component {
   constructor(props) {
     super(props)
