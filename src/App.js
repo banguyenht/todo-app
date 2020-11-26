@@ -3,44 +3,15 @@ import './App.css';
 import TaskControl from './components/TaskControl'
 import TaskList from './components/TaskList'
 import AddTask from './components/AddTask'
+import { connect } from 'react-redux'
+import * as actions from './actions/index'
+
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      tasks: [],
-      isDisplay: false,
       taskEditting: null
     }
-  }
-
-  componentDidMount() {
-    if(localStorage && localStorage.getItem('tasks')) {
-      const tasks = JSON.parse(localStorage.getItem('tasks'))
-      this.setState({ tasks: tasks })
-    }
-  }
-
-  randomId() {
-    return Math.random().toString(36).substr(2, 9)
-  }
-
-  onAddTask = () => {
-    this.setState({ isDisplay: true })
-  }
-
-  onHideClick = () => {
-    this.setState({ isDisplay: false, taskEditting: null })
-  }
-
-  onSubmit = (data) => {
-    var { tasks } = this.state
-    data.id = this.randomId()
-    tasks.push(data)
-    this.setState({
-      tasks: tasks,
-      isDisplay: false
-    })
-      localStorage.setItem('tasks', JSON.stringify(tasks))
   }
 
   onUpdateStatus = (taskId) => {
@@ -84,14 +55,18 @@ class App extends React.Component {
     return result
   }
 
+  onAddTask = () => {
+    console.log()
+  }
+
   render() {
-    const { tasks, isDisplay } = this.state
-    const formTask = isDisplay ?
+    const { tasks } = this.state
+    const formTask = this.props.isDisplayForm
       <AddTask onHideClick={this.onHideClick}
         onSubmit={this.onSubmit}
         taskEditting = {this.state.taskEditting}
         /> : ''
-    const classForTable =  isDisplay ? 'col col-md-8' : 'col col-md-12'
+    const classForTable =  this.props.is_open ? 'col col-md-8' : 'col col-md-12'
     return (
       <div className="container">
         <h4 className='text-center'>TODO APP</h4>
@@ -102,9 +77,7 @@ class App extends React.Component {
           <div className={classForTable}>
             <button className='btn btn-primary' onClick={ this.onAddTask }>Add Task</button>
             <TaskControl />
-            <TaskList tasks = {tasks} onUpdateStatus={this.onUpdateStatus} onDeleteItem = {this.onDeleteItem}
-              onUpdateItem = {this.onUpdateItem}
-            />
+            <TaskList />
           </div>
         </div>
       </div>
@@ -112,4 +85,18 @@ class App extends React.Component {
   }
 }
 
-export default App;
+const mapStateToProp = (state) => {
+  return {
+    isDisplayForm: state.isDisplayForm
+  }
+}
+
+const mapDispatchToProp = (dispatch, props) => {
+  return {
+    onToggleForm: () => {
+      dispatch(actions.toggleForm())
+    }
+  }
+}
+
+export default connect(mapStateToProp, mapDispatchToProp)(App);

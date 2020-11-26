@@ -1,17 +1,11 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import * as types from '../constants/ActionTypes'
+import * as actions from '../actions/index'
 
-export default class AddTask extends React.Component {
+class AddTask extends React.Component {
   constructor(props) {
-    console.log('init')
     super(props)
-    var name = props.taskEditting == null ? '' : props.taskEditting.name
-    var status = props.taskEditting == null ? '' : props.taskEditting.status
-    var id = props.taskEditting == null ? '' : props.taskEditting.id
-    this.state = {
-      name: name,
-      status: status,
-      id: id
-    }
   }
   onHideClick = () => {
     this.props.onHideClick()
@@ -32,7 +26,8 @@ export default class AddTask extends React.Component {
 
   onSubmit = (event) => {
     event.preventDefault()
-    this.props.onSubmit(this.state)
+    console.log(this.props.onAddTask(this.state))
+    // this.props.onAddTask(this.state)
   }
   render() {
     return(
@@ -76,4 +71,18 @@ export default class AddTask extends React.Component {
       </div>
     )
   }
-} 
+}
+
+const mapStateToProp = (state) => {
+  return {  }
+}
+
+const mapDispatchToProp = (dispatch, props) => {
+  return {
+    onAddTask: (task) => {
+      dispatch(actions.addTask(task))
+    }
+  }
+}
+
+export default connect(mapStateToProp, mapDispatchToProp)(AddTask)

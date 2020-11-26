@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
+import TaskItem from './TaskItem'
+import { connect } from 'react-redux'
 
-export default class TaskList extends React.Component {
+class TaskList extends React.Component {
   constructor(props) {
     super(props)
   }
 
   render() {
+    console.log(this.props.tasks)
     const taskElements = this.props.tasks.map((task, index) => {
       return(<TaskItem key = { index } task = {task} index = {index}
         onUpdateStatus = {this.props.onUpdateStatus}
@@ -46,41 +49,8 @@ export default class TaskList extends React.Component {
   }
 }
 
-class TaskItem extends Component {
-  constructor(props) {
-    super(props)
-  }
-
-  onUpdateStatus = () => {
-    this.props.onUpdateStatus(this.props.task.id)
-  }
-
-  onDeleteItem = () => {
-    this.props.onDeleteItem(this.props.task.id)
-  }
-
-  onUpdateItem = () => {
-    this.props.onUpdateItem(this.props.task.id)
-  }
-  render() {
-    const task = this.props.task
-    
-    const className = task.status === true ? 'active' : 'deactive'
-    return(
-      <tr>
-        <th scope="row">{this.props.index + 1}</th>
-        <td>{ task.name }</td>
-        <td>
-          <span>
-            <label className={ className } onClick={this.onUpdateStatus}>
-              { task.status === true ? 'Active' : 'Deactive' }</label>
-          </span>
-        </td>
-        <td>
-          <button className='btn btn-danger ml-10' onClick = { this.onUpdateItem }>Edit</button>
-          <button className='btn btn-danger ml-10' onClick = { this.onDeleteItem }>Delete</button>
-        </td>
-      </tr>
-    )
-  }
+const mapStateToProps = (state) => {
+  return { tasks: state.tasks }
 }
+
+export default connect(mapStateToProps, null)(TaskList)
