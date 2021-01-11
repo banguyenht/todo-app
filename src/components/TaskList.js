@@ -8,13 +8,8 @@ class TaskList extends React.Component {
   }
 
   render() {
-    console.log(this.props.tasks)
     const taskElements = this.props.tasks.map((task, index) => {
-      return(<TaskItem key = { index } task = {task} index = {index}
-        onUpdateStatus = {this.props.onUpdateStatus}
-        onDeleteItem = { this.props.onDeleteItem }
-        onUpdateItem = {this.props.onUpdateItem}
-      />)
+      return(<TaskItem key = { index } task = {task} index = {index}/>)
     })
     return(
       <div>

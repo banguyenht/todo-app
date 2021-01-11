@@ -14,15 +14,15 @@ class App extends React.Component {
     }
   }
 
-  onUpdateStatus = (taskId) => {
-    var index = this.findIndex(taskId)
-    var tasks = this.state.tasks
-    if(index != -1) {
-      tasks[index].status = !tasks[index].status
-      this.setState({tasks: tasks})
-      localStorage.setItem('tasks', JSON.stringify(tasks))
-    }
-  }
+  // onUpdateStatus = (taskId) => {
+  //   var index = this.findIndex(taskId)
+  //   var tasks = this.state.tasks
+  //   if(index != -1) {
+  //     tasks[index].status = !tasks[index].status
+  //     this.setState({tasks: tasks})
+  //     localStorage.setItem('tasks', JSON.stringify(tasks))
+  //   }
+  // }
 
 
   onDeleteItem = (taskId) => {
@@ -35,14 +35,14 @@ class App extends React.Component {
     }
   }
 
-  onUpdateItem = (taskId) => {
-    var index = this.findIndex(taskId)
-    var tasks= this.state.tasks
-    if(index != -1) {
-      this.setState({ isDisplay: true })
-      this.setState({taskEditting: tasks[index]})
-    }
-  }
+  // onUpdateItem = (taskId) => {
+  //   var index = this.findIndex(taskId)
+  //   var tasks= this.state.tasks
+  //   if(index != -1) {
+  //     this.setState({ isDisplay: true })
+  //     this.setState({taskEditting: tasks[index]})
+  //   }
+  // }
 
   findIndex = (id) => {
     var tasks = this.state.tasks;
@@ -56,17 +56,17 @@ class App extends React.Component {
   }
 
   onAddTask = () => {
-    console.log()
+    this.props.onToggleForm();
   }
 
   render() {
     const { tasks } = this.state
-    const formTask = this.props.isDisplayForm
-      <AddTask onHideClick={this.onHideClick}
+    const formTask = this.props.isDisplayForm ?
+      <AddTask onHideClick = { this.onHideClick }
         onSubmit={this.onSubmit}
         taskEditting = {this.state.taskEditting}
         /> : ''
-    const classForTable =  this.props.is_open ? 'col col-md-8' : 'col col-md-12'
+    const classForTable =  this.props.isDisplayForm ? 'col col-md-8' : 'col col-md-12'
     return (
       <div className="container">
         <h4 className='text-center'>TODO APP</h4>
@@ -91,7 +91,7 @@ const mapStateToProp = (state) => {
   }
 }
 
-const mapDispatchToProp = (dispatch, props) => {
+const mapDispatchToProp = (dispatch) => {
   return {
     onToggleForm: () => {
       dispatch(actions.toggleForm())

@@ -6,27 +6,28 @@ import * as actions from '../actions/index'
 class AddTask extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      name: '',
+      status: '',
+    }
   }
   onHideClick = () => {
-    this.props.onHideClick()
+    this.props.onCloseForm()
   }
 
   onChange = (event) => {
     var target = event.target
     var name = target.name
     var value = target.value
-    if(name === 'status') {
-      value = target.value === 'true' ? true : false
-    }
+    console.log('status: ' + value)
     this.setState({
       [name] : value
     })
-
   }
 
   onSubmit = (event) => {
     event.preventDefault()
-    console.log(this.props.onAddTask(this.state))
+    this.props.onAddTask(this.state)
     // this.props.onAddTask(this.state)
   }
   render() {
@@ -50,7 +51,8 @@ class AddTask extends React.Component {
             <lable>Status</lable> 
             <br />
             <select
-              className='form-control w150' name ='status'
+              className='form-control w150'
+              name ='status'
               value={this.state.status}
               onChange = {this.onChange}
             >
@@ -81,6 +83,9 @@ const mapDispatchToProp = (dispatch, props) => {
   return {
     onAddTask: (task) => {
       dispatch(actions.addTask(task))
+    },
+    onCloseForm: () => {
+      dispatch(actions.closeForm())
     }
   }
 }
